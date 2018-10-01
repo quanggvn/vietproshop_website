@@ -1,3 +1,11 @@
+<?php
+ob_start();
+session_start();
+include_once './ketnoi.php';
+
+if($_SESSION["email"] == "vietpro.edu.vn@gmail.com" && $_SESSION["mk"] == "vietpro.edu.vn"){
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,11 +41,15 @@
                 <ul class="user-menu">
                     <li class="dropdown pull-right">
 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg><span style="color: white;">Xin chào, Thành viên</span> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg><span style="color: white;">Xin chào, <?php
+                        if(isset($_SESSION["email"])){
+                            echo $_SESSION["email"];
+                        }
+                        ?></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Thông tin thành viên</a></li>
                             <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Cài đặt</a></li>
-                            <li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Đăng xuất</a></li>
+                            <li><a href="dangxuat.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Đăng xuất</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -65,7 +77,7 @@
                             Thêm mới
                         </a>
                     </li>
-                </ul>			
+                </ul>           
             </li>
             <li class="parent ">
                 <a href="quantri.php?page_layout=danhsachdm">
@@ -78,7 +90,7 @@
                         </a>
                     </li>
 
-                </ul>			
+                </ul>           
             </li>
             <li class="parent ">
                 <a href="quantri.php?page_layout=danhsachsp">
@@ -91,7 +103,7 @@
                         </a>
                     </li>
 
-                </ul>				
+                </ul>               
             </li>
             <li class="parent ">
                 <a href="#">
@@ -110,22 +122,22 @@
                         </a>
                     </li>
 
-                </ul>			
+                </ul>           
             </li>
 
             <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"/></svg> Cấu hình</a></li>
 
             <li role="presentation" class="divider"></li>
-            <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Đăng xuất</a></li>
+            <li><a href="dangxuat.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Đăng xuất</a></li>
         </ul>
 
     </div><!--/.sidebar-->
 
-    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">	
-        <?php		
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">   
+        <?php       
                 // master page
         if (isset($_GET["page_layout"])) {
-           switch ($_GET["page_layout"]) {
+         switch ($_GET["page_layout"]) {
             case 'danhsachdm': include_once "./danhsachdm.php";
             break;
             case 'danhsachsp': include_once "./danhsachsp.php";
@@ -148,7 +160,7 @@
 
     ?>
 
-</div>	<!--/.main-->
+</div>  <!--/.main-->
 
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -156,7 +168,7 @@
 <script src="js/chart-data.js"></script>
 <script src="js/easypiechart.js"></script>
 <script src="js/easypiechart-data.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>	
+<script src="js/bootstrap-datepicker.js"></script>  
 <script src="js/bootstrap-table.js"></script>
 <link rel="stylesheet" href="css/bootstrap-table.css"/>
 <script>
@@ -178,7 +190,12 @@
         if ($(window).width() <= 767)
             $('#sidebar-collapse').collapse('hide')
     })
-</script>	
+</script>   
 </body>
 
 </html>
+<?php
+    }else{
+        header('location: index.php');
+    }
+?>

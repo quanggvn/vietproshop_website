@@ -1,3 +1,33 @@
+<?php
+ob_start(); // tat loi header
+//khoi tao session
+session_start();
+include_once './ketnoi.php';    
+// kiem tra nhap thong tin
+if (isset($_POST["submit"])) {
+    $email = $_POST["email"];
+    $mk = $_POST["mk"];
+    //kiem tra trong csdl
+    if (isset($email)&&isset($mk)) {
+            $sql = "SELECT * FROM thanhvien WHERE email='$email' AND mat_khau='$mk'";
+            $query = mysqli_query($conn, $sql);
+            $rows = mysqli_num_rows($query);
+            if ($rows > 0) {
+                // khoi tao session
+                $_SESSION["email"] = $email;
+                $_SESSION["mk"] = $mk;
+                // chuyen huong nguoi dung
+                header('location: quantri.php');
+            }
+            else{
+                echo '<center class = "alert alert-danger">Tài khoản không tồn tại hoặc bạn không có quyền truy cập! </center>';
+            }
+
+          }
+
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,6 +53,9 @@
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">Đăng nhập hệ thống quản trị</div>
                     <div class="panel-body">
+                        <?php 
+                            if(!isset($_SESSION["email"])){
+                        ?>
                         <form method="post" role="form">
                             <fieldset>
                                 <div class="form-group">
@@ -41,6 +74,11 @@
                                 <input type="reset" name="resset" value="Làm mới" class="btn btn-primary" />							
                             </fieldset>
                         </form>
+                        <?php
+                            }else{
+                                header("location: quantri.php");
+                            }
+                        ?>
                     </div>
                 </div>
             </div><!-- /.col-->
